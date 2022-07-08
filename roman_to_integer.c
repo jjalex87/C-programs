@@ -21,7 +21,8 @@ int getDecimalFromRoman(char roman)
     }
 }
 
-int romanToInt(char * s){
+int romanToInt(char * s)
+{
     int len = strlen(s);
     int i;
     int val1, val2;
