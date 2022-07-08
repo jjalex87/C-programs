@@ -1,54 +1,49 @@
-
+int getDecimalFromRoman(char roman)
+{
+    switch(roman)
+    {
+        case 'I':
+            return 1;
+        case 'V':
+            return 5;
+        case 'X':
+            return 10;
+        case 'L':
+            return 50;
+        case 'C':
+            return 100;
+        case 'D':
+            return 500;
+        case 'M':
+            return 1000;
+        default:
+            return -1;
+    }
+}
 
 int romanToInt(char * s){
-    int romToIntLut[26];
-    char roman[8] = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
-    int integer[7] = {1, 5, 10, 50, 100, 500, 1000};
-    int idx;
     int len = strlen(s);
-    int val = 0;
-    int isSubtract = 0;
+    int i;
+    int val1, val2;
+    int decimal = 0;
     
-    for (idx = 0; idx < 7; idx++)
+    for (i = 0; i < len; i++)
     {
-        romToIntLut[roman[idx] - 'A'] = integer[idx];
-    }
-    
-    for (idx = 0; idx < len; idx++)
-    {
-        isSubtract = 0;
-        switch(s[idx])
+        val2 = 0;
+        val1 = getDecimalFromRoman(s[i]);
+        if ((i + 1) < len)
         {
-            case 'I':
-                if (s[idx + 1] == 'V' || s[idx + 1] == 'X')
-                {
-                    isSubtract = 1;
-                }
-                break;
-            case 'X':
-                if (s[idx + 1] == 'L' || s[idx + 1] == 'C')
-                {
-                    isSubtract = 1;
-                }
-                break;
-            case 'C':
-                if (s[idx + 1] == 'D' || s[idx + 1] == 'M')
-                {
-                    isSubtract = 1;
-                }
-                break;
-            default:
-                break;
+            val2 = getDecimalFromRoman(s[i + 1]);
         }
-        if (isSubtract)
+        if (val1 >= val2)
         {
-            val += romToIntLut[s[idx + 1] - 'A'] - romToIntLut[s[idx] - 'A'];
-            idx++;
+            decimal += val1;
         }
         else
         {
-            val += romToIntLut[s[idx] - 'A'];
+            decimal = decimal + val2 - val1;
+            i++;
         }
     }
-    return (val);
+    return (decimal);
 }
